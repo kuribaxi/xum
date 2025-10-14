@@ -90,6 +90,10 @@
             width: 100%;
             max-width: 100%;
             border-radius: 10px;
+            display: none;
+        }
+        .player-section video.active-player {
+            display: block;
         }
         .channel-name {
             font-size: 2em;
@@ -123,7 +127,7 @@
         <div class="header">
             <h1>📺 XOM TV</h1>
             <p>Iranska och Kurdiska TV-kanaler • Klicka för att titta</p>
-            <p class="warning">Kurdiska kanaler samt KOODAK+ och MAHABAD öppnas i ett nytt fönster på grund av strömningsbegränsningar.</p>
+            <p class="warning">Kurdiska kanaler från karwan.tv öppnas i ett nytt fönster. Övriga kurdiska kanaler, KOODAK+ och MAHABAD använder en separat videospelare för bättre kompatibilitet.</p>
         </div>
         <div class="channel-list">
             <div class="section">
@@ -150,8 +154,8 @@
                 <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/nvod8.m3u8?t=1757875753737" data-name="IRAN JAVAN" onclick="playChannel(this)">IRAN JAVAN</div>
                 <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/nvod4.m3u8?t=1758043626255" data-name="CAFEBAZI" onclick="playChannel(this)">CAFEBAZI</div>
                 <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/nvod10.m3u8?t=1757875758664" data-name="FILM" onclick="playChannel(this)">FILM</div>
-                <div class="channel" data-stream="https://ncdn.telewebion.com/mahabad/live/playlist.m3u8" data-name="MAHABAD" data-redirect="true" onclick="playChannel(this)">MAHABAD</div>
-                <div class="channel" data-stream="https://live-azd1118.telewebion.com/ek/javaneh/live/720p/index.m3u8" data-name="KOODAK+" data-redirect="true" onclick="playChannel(this)">KOODAK+</div>
+                <div class="channel" data-stream="https://ncdn.telewebion.com/mahabad/live/playlist.m3u8" data-name="MAHABAD" data-kurdish="true" onclick="playChannel(this)">MAHABAD</div>
+                <div class="channel" data-stream="https://live-azd1118.telewebion.com/ek/javaneh/live/720p/index.m3u8" data-name="KOODAK+" data-kurdish="true" onclick="playChannel(this)">KOODAK+</div>
             </div>
             <div class="section">
                 <h2>🏙️ Regionala Kanaler</h2>
@@ -187,113 +191,196 @@
                 <h2>🎥 Kurdiska Kanaler</h2>
                 <div class="subsection">
                     <h3>Nyheter</h3>
-                    <div class="channel" data-stream="https://5a3ed7a72ed4b.streamlock.net/zagrostv/SMIL:myStream.smil/playlist.m3u8" data-name="Zagros" data-redirect="true" onclick="playChannel(this)">Zagros</div>
-                    <div class="channel" data-stream="https://live.zoomnews.info/live/Zoom/index.m3u8" data-name="Zoom" data-redirect="true" onclick="playChannel(this)">Zoom</div>
-                    <div class="channel" data-stream="https://live.channel8.com/Channel8-Kurdish/index.fmp4.m3u8" data-name="Kanal8" data-redirect="true" onclick="playChannel(this)">Kanal8</div>
-                    <div class="channel" data-stream="https://svs.itworkscdn.net/rudawlive/rudawlive.smil/playlist.m3u8" data-name="Rudaw" data-redirect="true" onclick="playChannel(this)">Rudaw</div>
-                    <div class="channel" data-stream="https://iko-streamline-live1.akamaized.net/KurdsatNews/master.m3u8" data-name="Kurdsat News" data-redirect="true" onclick="playChannel(this)">Kurdsat News</div>
-                    <div class="channel" data-stream="https://muzkurd.com/sterktv/sterk/chunklist_w913361557.m3u8" data-name="Sterk" data-redirect="true" onclick="playChannel(this)">Sterk</div>
-                    <div class="channel" data-stream="https://media.streambrothers.com:1936/8226/8226/playlist.m3u8" data-name="NRT News" data-redirect="true" onclick="playChannel(this)">NRT News</div>
-                    <div class="channel" data-stream="https://d1x82nydcxndze.cloudfront.net/live/index_720p25.m3u8" data-name="Kurdistan24" data-redirect="true" onclick="playChannel(this)">Kurdistan24</div>
-                    <div class="channel" data-stream="https://karwan.tv/kurdsat-news-tv.html" data-name="Kurdsat News TV" data-redirect="true" onclick="playChannel(this)">Kurdsat News TV</div>
-                    <div class="channel" data-stream="https://karwan.tv/mmn-news.html" data-name="Mmn News" data-redirect="true" onclick="playChannel(this)">Mmn News</div>
-                    <div class="channel" data-stream="https://karwan.tv/shams-tv.html" data-name="Shams TV" data-redirect="true" onclick="playChannel(this)">Shams TV</div>
+                    <div class="channel" data-stream="https://5a3ed7a72ed4b.streamlock.net/zagrostv/SMIL:myStream.smil/playlist.m3u8" data-name="Zagros" data-kurdish="true" onclick="playChannel(this)">Zagros</div>
+                    <div class="channel" data-stream="https://live.channel8.com/Channel8-Kurdish/index.fmp4.m3u8" data-name="Kanal8" data-kurdish="true" onclick="playChannel(this)">Kanal8</div>
+                    <div class="channel" data-stream="https://svs.itworkscdn.net/rudawlive/rudawlive.smil/playlist.m3u8" data-name="Rudaw" data-kurdish="true" onclick="playChannel(this)">Rudaw</div>
+                    <div class="channel" data-stream="https://iko-streamline-live1.akamaized.net/KurdsatNews/master.m3u8" data-name="Kurdsat News" data-kurdish="true" onclick="playChannel(this)">Kurdsat News</div>
+                    <div class="channel" data-stream="https://5dab1db4b25fe.streamlock.net/sterk/sterktv/chunklist_w1084077249.m3u8" data-name="Sterk" data-kurdish="true" onclick="playChannel(this)">Sterk</div>
+                    <div class="channel" data-stream="https://media.streambrothers.com:1936/8226/8226/playlist.m3u8" data-name="NRT News" data-kurdish="true" onclick="playChannel(this)">NRT News</div>
+                    <div class="channel" data-stream="https://d1x82nydcxndze.cloudfront.net/live/index_720p25.m3u8" data-name="Kurdistan24" data-kurdish="true" onclick="playChannel(this)">Kurdistan24</div>
+                    <div class="channel" data-stream="https://karwan.tv/kurdsat-news-tv.html" data-name="Kurdsat News TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Kurdsat News TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/mmn-news.html" data-name="Mmn News" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Mmn News</div>
+                    <div class="channel" data-stream="https://karwan.tv/shams-tv.html" data-name="Shams TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Shams TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/rudaw-tv.html" data-name="Rudaw TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Rudaw TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/channel-8.html" data-name="Channel 8" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Channel 8</div>
+                    <div class="channel" data-stream="https://karwan.tv/cpi-tv.html" data-name="CPI TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">CPI TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/duhok-tv.html" data-name="Duhok TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Duhok TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/geli-kurdistan-tv.html" data-name="Geli Kurdistan TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Geli Kurdistan TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/kurd-channel.html" data-name="Kurd Channel" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Kurd Channel</div>
+                    <div class="channel" data-stream="https://karwan.tv/kurdistan-tv.html" data-name="Kurdistan TV (Karwan)" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Kurdistan TV (Karwan)</div>
+                    <div class="channel" data-stream="https://karwan.tv/kurdistan24-tv.html" data-name="Kurdistan24 TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Kurdistan24 TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/nalia-tv.html" data-name="Nalia TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Nalia TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/rojhelat-tv.html" data-name="Rojhelat TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Rojhelat TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/slemani-tv.html" data-name="Slemani TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Slemani TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/xabir-tv.html" data-name="Xabir TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Xabir TV</div>
                 </div>
                 <div class="subsection">
                     <h3>Musik</h3>
-                    <div class="channel" data-stream="https://4kuhls.persiana.live/hls/stream.m3u8" data-name="4 Kurd" data-redirect="true" onclick="playChannel(this)">4 Kurd</div>
-                    <div class="channel" data-stream="https://54.36.110.140/live3/live3.m3u8" data-name="Med Music" data-redirect="true" onclick="playChannel(this)">Med Music</div>
-                    <div class="channel" data-stream="https://karwan.tv/med-muzik-tv.html" data-name="Med Muzik TV" data-redirect="true" onclick="playChannel(this)">Med Muzik TV</div>
-                    <div class="channel" data-stream="https://karwan.tv/mmn-clip.html" data-name="Mmn Clip" data-redirect="true" onclick="playChannel(this)">Mmn Clip</div>
-                    <div class="channel" data-stream="https://karwan.tv/graryan-tv.html" data-name="Graryan TV" data-redirect="true" onclick="playChannel(this)">Graryan TV</div>
-                    <div class="channel" data-stream="https://karwan.tv/kanal-21.html" data-name="Kanal 21" data-redirect="true" onclick="playChannel(this)">Kanal 21</div>
-                    <div class="channel" data-stream="https://karwan.tv/kurd-7.html" data-name="Kurd 7" data-redirect="true" onclick="playChannel(this)">Kurd 7</div>
+                    <div class="channel" data-stream="https://4kuhls.persiana.live/hls/stream.m3u8" data-name="4 Kurd" data-kurdish="true" onclick="playChannel(this)">4 Kurd</div>
+                    <div class="channel" data-stream="https://54.36.110.140/live3/live3.m3u8" data-name="Med Music" data-kurdish="true" onclick="playChannel(this)">Med Music</div>
+                    <div class="channel" data-stream="https://karwan.tv/med-muzik-tv.html" data-name="Med Muzik TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Med Muzik TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/mmn-clip.html" data-name="Mmn Clip" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Mmn Clip</div>
+                    <div class="channel" data-stream="https://karwan.tv/graryan-tv.html" data-name="Graryan TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Graryan TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/kurd-7.html" data-name="Kurd 7" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Kurd 7</div>
+                    <div class="channel" data-stream="https://karwan.tv/4-kurd-tv.html" data-name="4 Kurd TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">4 Kurd TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/bnar-tv.html" data-name="Bnar TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Bnar TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/kurdmax-music.html" data-name="Kurdmax Music" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Kurdmax Music</div>
+                    <div class="channel" data-stream="https://karwan.tv/walla-tv.html" data-name="Walla TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Walla TV</div>
                 </div>
                 <div class="subsection">
                     <h3>Underhållning</h3>
-                    <div class="channel" data-stream="https://aryen.tv/live/tv/playlist.m3u8" data-name="Aryen" data-redirect="true" onclick="playChannel(this)">Aryen</div>
-                    <div class="channel" data-stream="https://cira-tv.akamaized.net/hls/stream_0.m3u8" data-name="Cira" data-redirect="true" onclick="playChannel(this)">Cira</div>
-                    <div class="channel" data-stream="https://live.kwikmotion.com/waarmedialive/waarmedia.smil/waarmediapublish/waarmedia_source/chunks.m3u8" data-name="Waar" data-redirect="true" onclick="playChannel(this)">Waar</div>
-                    <div class="channel" data-stream="https://rojava-tv.akamaized.net/hls/rojava-tv.m3u8" data-name="Rojava" data-redirect="true" onclick="playChannel(this)">Rojava</div>
-                    <div class="channel" data-stream="https://iko-live.akamaized.net/KurdsatTV/master.m3u8" data-name="Kurdsat HD" data-redirect="true" onclick="playChannel(this)">Kurdsat HD</div>
-                    <div class="channel" data-stream="https://5a3ed7a72ed4b.streamlock.net/live/SMIL:myStream.smil/playlist.m3u8" data-name="Kurdistan TV" data-redirect="true" onclick="playChannel(this)">Kurdistan TV</div>
-                    <div class="channel" data-stream="https://iko-live.akamaized.net/kurdhd/master.m3u8" data-name="PDKI" data-redirect="true" onclick="playChannel(this)">PDKI</div>
-                    <div class="channel" data-stream="https://live.tvkomala.com/live/komala/playlist.m3u8" data-name="Komala" data-redirect="true" onclick="playChannel(this)">Komala</div>
-                    <div class="channel" data-stream="https://live.host247.net/gk/gksat/playlist.m3u8" data-name="GK" data-redirect="true" onclick="playChannel(this)">GK</div>
-                    <div class="channel" data-stream="https://lenz.splus.ir/PLTV/88888888/224/3221226647/index.m3u8" data-name="IRIB Kurdistan" data-redirect="true" onclick="playChannel(this)">IRIB Kurdistan</div>
-                    <div class="channel" data-stream="https://telewebion.com/live/mahabad" data-name="Mahabad" data-redirect="true" onclick="playChannel(this)">Mahabad</div>
-                    <div class="channel" data-stream="https://tv-trtkurdi.medya.trt.com.tr/master.m3u8" data-name="TRT Kurdi" data-redirect="true" onclick="playChannel(this)">TRT Kurdi</div>
-                    <div class="channel" data-stream="https://kurdish.sahartv.ir/live" data-name="Sahar" data-redirect="true" onclick="playChannel(this)">Sahar</div>
-                    <div class="channel" data-stream="https://ava5.site/upload/ava.m3u8" data-name="Ava TV" data-redirect="true" onclick="playChannel(this)">Ava TV</div>
-                    <div class="channel" data-stream="https://utvhawler.net/index.htm" data-name="UTV Hawler" data-redirect="true" onclick="playChannel(this)">UTV Hawler</div>
-                    <div class="channel" data-stream="https://karwan.tv/ala-tv.html" data-name="ALA" data-redirect="true" onclick="playChannel(this)">ALA</div>
-                    <div class="channel" data-stream="https://karwan.tv/animal-box.html" data-name="ANIMAL" data-redirect="true" onclick="playChannel(this)">ANIMAL</div>
-                    <div class="channel" data-stream="https://karwan.tv/mmn-documentary.html" data-name="Mmn Documentary" data-redirect="true" onclick="playChannel(this)">Mmn Documentary</div>
-                    <div class="channel" data-stream="https://karwan.tv/avar-tv.html" data-name="AVAR" data-redirect="true" onclick="playChannel(this)">AVAR</div>
-                    <div class="channel" data-stream="https://live.kirkuklive.live/hls/stream/index.m3u8" data-name="Kirkuk TV" data-redirect="true" onclick="playChannel(this)">Kirkuk TV</div>
-                    <div class="channel" data-stream="https://karwan.tv/welat-tv.html" data-name="Welat TV" data-redirect="true" onclick="playChannel(this)">Welat TV</div>
-                    <div class="channel" data-stream="https://karwan.tv/barin-family.html" data-name="Barin Family" data-redirect="true" onclick="playChannel(this)">Barin Family</div>
-                    <div class="channel" data-stream="https://media2.streambrothers.com:1936/8218/8218/playlist.m3u8" data-name="Payam" data-redirect="true" onclick="playChannel(this)">Payam</div>
-                    <div class="channel" data-stream="https://www.speda.net/tv1/" data-name="Speda" data-redirect="true" onclick="playChannel(this)">Speda</div>
-                    <div class="channel" data-stream="http://avrstream.com:1935/live/SHARTV/chunklist_w2095841563.m3u8" data-name="Shar TV" data-redirect="true" onclick="playChannel(this)">Shar TV</div>
-                    <div class="channel" data-stream="https://sadatv.icdndhcp.com/live/sadatv/playlist.m3u8" data-name="Sada" data-redirect="true" onclick="playChannel(this)">Sada</div>
-                    <div class="channel" data-stream="https://ronahi-tv.akamaized.net/hls/stream_0.m3u8" data-name="Ronahi" data-redirect="true" onclick="playChannel(this)">Ronahi</div>
-                    <div class="channel" data-stream="https://app-live.org/live/3268334b/index.m3u8" data-name="Amozhgary" data-redirect="true" onclick="playChannel(this)">Amozhgary</div>
-                    <div class="channel" data-stream="https://karwan.tv/barin-quran.html" data-name="Barin Quran" data-redirect="true" onclick="playChannel(this)">Barin Quran</div>
-                    <div class="channel" data-stream="https://karwan.tv/bangawaz-tv.html" data-name="Bangewaz" data-redirect="true" onclick="playChannel(this)">Bangewaz</div>
-                    <div class="channel" data-stream="https://karwan.tv/bangxwazen-badinan-tv.html" data-name="Bangxwazen Badinan TV" data-redirect="true" onclick="playChannel(this)">Bangxwazen Badinan TV</div>
-                    <div class="channel" data-stream="https://karwan.tv/mmn-quran-tv.html" data-name="Mmn Quran TV" data-redirect="true" onclick="playChannel(this)">Mmn Quran TV</div>
-                    <div class="channel" data-stream="https://karwan.tv/eman-tv.html" data-name="Eman TV" data-redirect="true" onclick="playChannel(this)">Eman TV</div>
-                    <div class="channel" data-stream="https://karwan.tv/shna-tv.html" data-name="Shna TV" data-redirect="true" onclick="playChannel(this)">Shna TV</div>
-                    <div class="channel" data-stream="https://karwan.tv/nr1-kurd.html" data-name="Nr1 Kurd" data-redirect="true" onclick="playChannel(this)">Nr1 Kurd</div>
-                    <div class="channel" data-stream="https://karwan.tv/mihrab-tv.html" data-name="Mihrab TV" data-redirect="true" onclick="playChannel(this)">Mihrab TV</div>
-                    <div class="channel" data-stream="https://karwan.tv/esra-tv.html" data-name="Esra TV" data-redirect="true" onclick="playChannel(this)">Esra TV</div>
-                    <div class="channel" data-stream="https://karwan.tv/znar-tv.html" data-name="Znar TV" data-redirect="true" onclick="playChannel(this)">Znar TV</div>
-                    <div class="channel" data-stream="https://karwan.tv/befrin-tv.html" data-name="Befrin TV" data-redirect="true" onclick="playChannel(this)">Befrin TV</div>
-                    <div class="channel" data-stream="https://karwan.tv/derin-tv.html" data-name="Derin TV" data-redirect="true" onclick="playChannel(this)">Derin TV</div>
-                    <div class="channel" data-stream="https://karwan.tv/euro-kurd-tv.html" data-name="Euro Kurd TV" data-redirect="true" onclick="playChannel(this)">Euro Kurd TV</div>
-                    <div class="channel" data-stream="https://karwan.tv/halabja-tv.html" data-name="Halabja TV" data-redirect="true" onclick="playChannel(this)">Halabja TV</div>
-                    <div class="channel" data-stream="https://karwan.tv/khak-tv.html" data-name="Khak TV" data-redirect="true" onclick="playChannel(this)">Khak TV</div>
-                    <div class="channel" data-stream="https://karwan.tv/knn-tv.html" data-name="Knn TV" data-redirect="true" onclick="playChannel(this)">Knn TV</div>
-                    <div class="channel" data-stream="https://karwan.tv/kurdmax-show-tv.html" data-name="Kurdmax Show TV" data-redirect="true" onclick="playChannel(this)">Kurdmax Show TV</div>
-                    <div class="channel" data-stream="https://karwan.tv/kurdmax-tv.html" data-name="Kurdmax TV" data-redirect="true" onclick="playChannel(this)">Kurdmax TV</div>
-                    <div class="channel" data-stream="https://karwan.tv/mix-tv.html" data-name="Mix TV" data-redirect="true" onclick="playChannel(this)">Mix TV</div>
-                    <div class="channel" data-stream="https://karwan.tv/mmn-drama.html" data-name="Mmn Drama" data-redirect="true" onclick="playChannel(this)">Mmn Drama</div>
-                    <div class="channel" data-stream="https://karwan.tv/mmn-show.html" data-name="Mmn Show" data-redirect="true" onclick="playChannel(this)">Mmn Show</div>
-                    <div class="channel" data-stream="https://karwan.tv/mmn-movies.html" data-name="Mmn Movies" data-redirect="true" onclick="playChannel(this)">Mmn Movies</div>
-                    <div class="channel" data-stream="https://karwan.tv/soran-entertainment-tv.html" data-name="Soran Entertainment TV" data-redirect="true" onclick="playChannel(this)">Soran Entertainment TV</div>
+                    <div class="channel" data-stream="https://stream.aryen.tv/live/tv/chunklist_w189856026.m3u8" data-name="Aryen" data-kurdish="true" onclick="playChannel(this)">Aryen</div>
+                    <div class="channel" data-stream="https://cira-tv.akamaized.net/hls/stream_0.m3u8" data-name="Cira" data-kurdish="true" onclick="playChannel(this)">Cira</div>
+                    <div class="channel" data-stream="https://live.kwikmotion.com/waarmedialive/waarmedia.smil/waarmediapublish/waarmedia_source/chunks.m3u8" data-name="Waar" data-kurdish="true" onclick="playChannel(this)">Waar</div>
+                    <div class="channel" data-stream="https://rojava-tv.akamaized.net/hls/rojava-tv.m3u8" data-name="Rojava" data-kurdish="true" onclick="playChannel(this)">Rojava</div>
+                    <div class="channel" data-stream="https://hlspackager.akamaized.net/live/DB/KURDSAT_HD/HLS/KURDSAT_HD-mp4a_128000_eng=20000.m3u8" data-name="Kurdsat HD" data-kurdish="true" onclick="playChannel(this)">Kurdsat HD</div>
+                    <div class="channel" data-stream="https://5a3ed7a72ed4b.streamlock.net/live/SMIL:myStream.smil/playlist.m3u8" data-name="Kurdistan TV" data-kurdish="true" onclick="playChannel(this)">Kurdistan TV</div>
+                    <div class="channel" data-stream="https://cdn.northtelecom.org/KurdChannel.m3u8" data-name="PDKI" data-kurdish="true" onclick="playChannel(this)">PDKI</div>
+                    <div class="channel" data-stream="https://live.tvkomala.com/live/komala/playlist.m3u8" data-name="Komala" data-kurdish="true" onclick="playChannel(this)">Komala</div>
+                    <div class="channel" data-stream="https://live.host247.net/gk/gksat/playlist.m3u8" data-name="GK" data-kurdish="true" onclick="playChannel(this)">GK</div>
+                    <div class="channel" data-stream="https://lenz.splus.ir/PLTV/88888888/224/3221226647/index.m3u8" data-name="IRIB Kurdistan" data-kurdish="true" onclick="playChannel(this)">IRIB Kurdistan</div>
+                    <div class="channel" data-stream="https://telewebion.com/live/mahabad" data-name="Mahabad" data-kurdish="true" onclick="playChannel(this)">Mahabad</div>
+                    <div class="channel" data-stream="https://tv-trtkurdi.medya.trt.com.tr/master.m3u8" data-name="TRT Kurdi" data-kurdish="true" onclick="playChannel(this)">TRT Kurdi</div>
+                    <div class="channel" data-stream="https://kurdish.sahartv.ir/live" data-name="Sahar" data-kurdish="true" onclick="playChannel(this)">Sahar</div>
+                    <div class="channel" data-stream="https://ava5.site/upload/ava.m3u8" data-name="Ava TV" data-kurdish="true" onclick="playChannel(this)">Ava TV</div>
+                    <div class="channel" data-stream="https://utvhawler.net/index.htm" data-name="UTV Hawler" data-kurdish="true" onclick="playChannel(this)">UTV Hawler</div>
+                    <div class="channel" data-stream="https://karwan.tv/waar-tv.html" data-name="Waar TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Waar TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/rojava-tv.html" data-name="Rojava TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Rojava TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/ronahi-tv.html" data-name="Ronahi TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Ronahi TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/ava-tv.html" data-name="Ava TV (Karwan)" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Ava TV (Karwan)</div>
+                    <div class="channel" data-stream="https://karwan.tv/utv-hawler.html" data-name="UTV Hawler (Karwan)" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">UTV Hawler (Karwan)</div>
                 </div>
                 <div class="subsection">
                     <h3>Barn</h3>
-                    <div class="channel" data-stream="https://5dcabf026b188.streamlock.net/afarinTV/livestream/playlist.m3u8" data-name="Baxche" data-redirect="true" onclick="playChannel(this)">Baxche</div>
-                    <div class="channel" data-stream="https://65f16f0fdfc51.streamlock.net/afarinTV/livestream/playlist.m3u8" data-name="Afarin Kids" data-redirect="true" onclick="playChannel(this)">Afarin Kids</div>
-                    <div class="channel" data-stream="https://zindikurmanci.zaroktv.com.tr/hls/0/stream.m3u8" data-name="Zarok Kurmanci" data-redirect="true" onclick="playChannel(this)">Zarok Kurmanci</div>
-                    <div class="channel" data-stream="https://zindisorani.zaroktv.com.tr/hls/stream.m3u8" data-name="Zarok Sorani" data-redirect="true" onclick="playChannel(this)">Zarok Sorani</div>
-                    <div class="channel" data-stream="https://karwan.tv/kidco-tv.html" data-name="Kidco TV" data-redirect="true" onclick="playChannel(this)">Kidco TV</div>
-                    <div class="channel" data-stream="https://karwan.tv/mmn-kids.html" data-name="Mmn Kids" data-redirect="true" onclick="playChannel(this)">Mmn Kids</div>
-                    <div class="channel" data-stream="https://karwan.tv/nrt-3-kids.html" data-name="Nrt 3 Kids" data-redirect="true" onclick="playChannel(this)">Nrt 3 Kids</div>
-                    <div class="channel" data-stream="https://karwan.tv/afarin-baxcha.html" data-name="Afarin Baxcha" data-redirect="true" onclick="playChannel(this)">Afarin Baxcha</div>
+                    <div class="channel" data-stream="https://5dcabf026b188.streamlock.net/afarinTV/livestream/playlist.m3u8" data-name="Baxche" data-kurdish="true" onclick="playChannel(this)">Baxche</div>
+                    <div class="channel" data-stream="https://65f16f0fdfc51.streamlock.net/afarinTV/livestream/playlist.m3u8" data-name="Afarin Kids" data-kurdish="true" onclick="playChannel(this)">Afarin Kids</div>
+                    <div class="channel" data-stream="https://zindikurmanci.zaroktv.com.tr/hls/0/stream.m3u8" data-name="Zarok Kurmanci" data-kurdish="true" onclick="playChannel(this)">Zarok Kurmanci</div>
+                    <div class="channel" data-stream="https://zindisorani.zaroktv.com.tr/hls/stream.m3u8" data-name="Zarok Sorani" data-kurdish="true" onclick="playChannel(this)">Zarok Sorani</div>
+                    <div class="channel" data-stream="https://karwan.tv/kidco-tv.html" data-name="Kidco TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Kidco TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/mmn-kids.html" data-name="Mmn Kids" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Mmn Kids</div>
+                    <div class="channel" data-stream="https://karwan.tv/nrt-3-kids.html" data-name="Nrt 3 Kids" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Nrt 3 Kids</div>
+                    <div class="channel" data-stream="https://karwan.tv/afarin-baxcha.html" data-name="Afarin Baxcha" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Afarin Baxcha</div>
+                    <div class="channel" data-stream="https://karwan.tv/astera-baby.html" data-name="Astera Baby" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Astera Baby</div>
+                    <div class="channel" data-stream="https://karwan.tv/jojo-mama.html" data-name="Jojo Mama" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Jojo Mama</div>
+                    <div class="channel" data-stream="https://karwan.tv/gewher-kids.html" data-name="Gewher Kids" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Gewher Kids</div>
+                    <div class="channel" data-stream="https://karwan.tv/zarok-tv.html" data-name="Zarok TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Zarok TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/kurdmax-pepule.html" data-name="Kurdmax Pepule" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Kurdmax Pepule</div>
+                    <div class="channel" data-stream="https://karwan.tv/barin-family.html" data-name="Barin Family" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Barin Family</div>
+                </div>
+                <div class="subsection">
+                    <h3>Film</h3>
+                    <div class="channel" data-stream="https://karwan.tv/astera-movies.html" data-name="Astera Movies" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Astera Movies</div>
+                    <div class="channel" data-stream="https://karwan.tv/barin-movies.html" data-name="Barin Movies" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Barin Movies</div>
+                    <div class="channel" data-stream="https://karwan.tv/bnar-action.html" data-name="Bnar Action" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Bnar Action</div>
+                    <div class="channel" data-stream="https://karwan.tv/cihan-tv.html" data-name="Cihan TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Cihan TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/delal-tv.html" data-name="Delal TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Delal TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/mix-tv.html" data-name="Mix TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Mix TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/mmn-drama.html" data-name="Mmn Drama" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Mmn Drama</div>
+                    <div class="channel" data-stream="https://karwan.tv/mmn-movies.html" data-name="Mmn Movies" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Mmn Movies</div>
+                    <div class="channel" data-stream="https://karwan.tv/mmn-show.html" data-name="Mmn Show" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Mmn Show</div>
+                    <div class="channel" data-stream="https://karwan.tv/nalia-tv-2.html" data-name="Nalia TV 2" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Nalia TV 2</div>
+                    <div class="channel" data-stream="https://karwan.tv/qallam-tv.html" data-name="Qallam TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Qallam TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/newline-tv-2.html" data-name="Newline TV 2" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Newline TV 2</div>
+                    <div class="channel" data-stream="https://karwan.tv/soz-tv.html" data-name="Soz TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Soz TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/zed-tv-plus.html" data-name="Zed TV Plus" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Zed TV Plus</div>
+                </div>
+                <div class="subsection">
+                    <h3>Quran</h3>
+                    <div class="channel" data-stream="https://karwan.tv/nrt-4.html" data-name="NRT 4" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">NRT 4</div>
+                    <div class="channel" data-stream="https://karwan.tv/bask-tv.html" data-name="Bask TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Bask TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/amozhgary-tv.html" data-name="Amozhgary TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Amozhgary TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/ashna-quran.html" data-name="Ashna Quran" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Ashna Quran</div>
+                    <div class="channel" data-stream="https://karwan.tv/ashti-family.html" data-name="Ashti Family" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Ashti Family</div>
+                    <div class="channel" data-stream="https://karwan.tv/ashti-tv.html" data-name="Ashti TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Ashti TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/baboly-tv.html" data-name="Baboly TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Baboly TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/bangawaz-tv.html" data-name="Bangawaz" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Bangawaz</div>
+                    <div class="channel" data-stream="https://karwan.tv/bangxwazen-badinan-tv.html" data-name="Bangxwazen Badinan TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Bangxwazen Badinan TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/barin-quran.html" data-name="Barin Quran" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Barin Quran</div>
+                    <div class="channel" data-stream="https://karwan.tv/eman-tv.html" data-name="Eman TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Eman TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/farmoda-tv.html" data-name="Farmoda TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Farmoda TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/imk-quran.html" data-name="IMK Quran" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">IMK Quran</div>
+                    <div class="channel" data-stream="https://karwan.tv/kani-tv.html" data-name="Kani TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Kani TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/mihrab-tv.html" data-name="Mihrab TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Mihrab TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/mmn-quran-tv.html" data-name="Mmn Quran TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Mmn Quran TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/naqshi-media.html" data-name="Naqshi Media" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Naqshi Media</div>
+                    <div class="channel" data-stream="https://karwan.tv/payam-tv.html" data-name="Payam TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Payam TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/sada-tv.html" data-name="Sada TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Sada TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/shar-quran.html" data-name="Shar Quran" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Shar Quran</div>
+                    <div class="channel" data-stream="https://karwan.tv/shna-quran.html" data-name="Shna Quran" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Shna Quran</div>
+                </div>
+                <div class="subsection">
+                    <h3>Kultur</h3>
+                    <div class="channel" data-stream="https://karwan.tv/ala-tv.html" data-name="ALA" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">ALA</div>
+                    <div class="channel" data-stream="https://karwan.tv/astera-culture.html" data-name="Astera Culture" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Astera Culture</div>
+                    <div class="channel" data-stream="https://karwan.tv/cira-tv.html" data-name="Cira TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Cira TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/dever-tv.html" data-name="Dever TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Dever TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/dimen-tv.html" data-name="Dimen TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Dimen TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/euro-kurd-tv.html" data-name="Euro Kurd TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Euro Kurd TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/jamawar-tv.html" data-name="Jamawar TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Jamawar TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/kurdana-tv.html" data-name="Kurdana TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Kurdana TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/rasan-tv.html" data-name="Rasan TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Rasan TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/rozh-tv.html" data-name="Rozh TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Rozh TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/shar-tv.html" data-name="Shar TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Shar TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/shna-tv.html" data-name="Shna TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Shna TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/sima-tv.html" data-name="Sima TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Sima TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/srusht-tv.html" data-name="Srusht TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Srusht TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/utv-duhok.html" data-name="UTV Duhok" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">UTV Duhok</div>
+                    <div class="channel" data-stream="https://karwan.tv/zaxo-tv.html" data-name="Zaxo TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Zaxo TV</div>
+                </div>
+                <div class="subsection">
+                    <h3>Serial</h3>
+                    <div class="channel" data-stream="https://karwan.tv/astera-family.html" data-name="Astera Family" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Astera Family</div>
+                    <div class="channel" data-stream="https://karwan.tv/astera-show.html" data-name="Astera Show" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Astera Show</div>
+                    <div class="channel" data-stream="https://karwan.tv/bmc-tv.html" data-name="BMC TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">BMC TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/derwaze-tv.html" data-name="Derwaze TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Derwaze TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/kurdmax-show-tv.html" data-name="Kurdmax Show TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Kurdmax Show TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/kurdmax-tv.html" data-name="Kurdmax TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Kurdmax TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/newline-tv.html" data-name="Newline TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Newline TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/ranya-tv.html" data-name="Ranya TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Ranya TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/reng-tv.html" data-name="Reng TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Reng TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/speda-drama.html" data-name="Speda Drama" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Speda Drama</div>
+                    <div class="channel" data-stream="https://karwan.tv/zed-tv.html" data-name="Zed TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Zed TV</div>
+                </div>
+                <div class="subsection">
+                    <h3>Dokumentär</h3>
+                    <div class="channel" data-stream="https://karwan.tv/znar-tv.html" data-name="Znar TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Znar TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/zhyar-tv.html" data-name="Zhyar TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Zhyar TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/astera-documentary.html" data-name="Astera Documentary" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Astera Documentary</div>
+                    <div class="channel" data-stream="https://karwan.tv/minara-tv.html" data-name="Minara TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Minara TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/mmn-documentary.html" data-name="Mmn Documentary" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Mmn Documentary</div>
+                    <div class="channel" data-stream="https://karwan.tv/reng-documentary.html" data-name="Reng Documentary" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Reng Documentary</div>
+                    <div class="channel" data-stream="https://karwan.tv/shaista-tv.html" data-name="Shaista TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Shaista TV</div>
+                    <div class="channel" data-stream="https://karwan.tv/soran-entertainment-tv.html" data-name="Soran Entertainment TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Soran Entertainment TV</div>
+                </div>
+                <div class="subsection">
+                    <h3>Utbildning</h3>
+                    <div class="channel" data-stream="https://karwan.tv/parwarday-tv-duhok.html" data-name="Parwarday TV Duhok" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Parwarday TV Duhok</div>
+                    <div class="channel" data-stream="https://karwan.tv/parwarday-tv-hawler.html" data-name="Parwarday TV Hawler" data-kurdish="true" data-redirect="true" onclick="playChannel(this)">Parwarday TV Hawler</div>
                 </div>
             </div>
         </div>
         <div class="player-section">
             <h1 class="channel-name" id="channelName">Välj en kanal</h1>
             <video id="player" controls></video>
+            <video id="kurdishPlayer" controls></video>
         </div>
     </div>
     <script>
-        const video = document.getElementById('player');
+        const mainPlayer = document.getElementById('player');
+        const kurdishPlayer = document.getElementById('kurdishPlayer');
         const channelNameElement = document.getElementById('channelName');
-        let hls = null;
+        let hlsMain = null;
+        let hlsKurdish = null;
         let activeChannel = null;
 
         function playChannel(element) {
             const streamUrl = element.getAttribute('data-stream');
             const channelName = element.getAttribute('data-name');
+            const isKurdish = element.getAttribute('data-kurdish') === 'true';
             const isRedirect = element.getAttribute('data-redirect') === 'true';
 
             channelNameElement.textContent = channelName;
-            console.log(`Försöker ${isRedirect ? 'öppna' : 'spela upp'}: ${streamUrl}`);
+            console.log(`Försöker ${isRedirect ? 'öppna' : 'spela upp'}: ${streamUrl} (Kurdish: ${isKurdish})`);
 
             // Ta bort active-class från tidigare kanal
             if (activeChannel) {
@@ -303,13 +390,44 @@
             element.classList.add('active-channel');
             activeChannel = element;
 
+            // Hantera redirect-kanaler (karwan.tv)
             if (isRedirect) {
-                // Öppna redirect-länkar i ett nytt fönster
                 window.open(streamUrl, '_blank', 'width=800,height=450,scrollbars=yes,resizable=yes');
                 channelNameElement.textContent = `${channelName} (Öppnas i nytt fönster)`;
+                // Dölj båda spelarna
+                mainPlayer.classList.remove('active-player');
+                kurdishPlayer.classList.remove('active-player');
+                if (hlsMain) {
+                    hlsMain.destroy();
+                    hlsMain = null;
+                }
+                if (hlsKurdish) {
+                    hlsKurdish.destroy();
+                    hlsKurdish = null;
+                }
                 return;
             }
 
+            // Välj rätt spelare
+            const video = isKurdish ? kurdishPlayer : mainPlayer;
+            const hls = isKurdish ? hlsKurdish : hlsMain;
+            const otherPlayer = isKurdish ? mainPlayer : kurdishPlayer;
+            const otherHls = isKurdish ? hlsMain : hlsKurdish;
+
+            // Stoppa och dölj den andra spelaren
+            otherPlayer.pause();
+            otherPlayer.src = '';
+            otherPlayer.classList.remove('active-player');
+            if (otherHls) {
+                otherHls.destroy();
+                if (isKurdish) hlsMain = null;
+                else hlsKurdish = null;
+            }
+
+            // Visa den valda spelaren
+            video.classList.add('active-player');
+
+            // Förstör tidigare HLS-instans om den finns
             if (hls) {
                 hls.destroy();
             }
@@ -318,22 +436,22 @@
             video.load();
 
             if (Hls.isSupported()) {
-                hls = new Hls({
+                const newHls = new Hls({
                     debug: true,
                     xhrSetup: function (xhr, url) {
                         console.log('Laddar resurs:', url);
                     }
                 });
-                hls.loadSource(streamUrl);
-                hls.attachMedia(video);
-                hls.on(Hls.Events.MANIFEST_PARSED, () => {
+                newHls.loadSource(streamUrl);
+                newHls.attachMedia(video);
+                newHls.on(Hls.Events.MANIFEST_PARSED, () => {
                     video.muted = true; // Mute för att tillåta autoplay
                     video.play().catch(error => {
                         console.error('Autoplay misslyckades:', error);
                         channelNameElement.textContent = `${channelName} (Starta videon manuellt: ${error.message})`;
                     });
                 });
-                hls.on(Hls.Events.ERROR, (event, data) => {
+                newHls.on(Hls.Events.ERROR, (event, data) => {
                     console.error('HLS-fel:', data);
                     if (data.details === 'manifestLoadError') {
                         channelNameElement.textContent = `${channelName} (Fel: Kan inte ladda manifest. Kontrollera strömlänken.)`;
@@ -345,6 +463,8 @@
                         channelNameElement.textContent = `${channelName} (Fel: ${data.details})`;
                     }
                 });
+                if (isKurdish) hlsKurdish = newHls;
+                else hlsMain = newHls;
             } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
                 video.muted = true; // Mute för att tillåta autoplay
                 video.play().catch(error => {
