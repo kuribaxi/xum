@@ -1,352 +1,185 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>XOM TV - Iranska och Kurdiska Kanaler</title>
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #1a1a2e;
-            color: white;
-            margin: 0;
-            padding: 20px;
-            line-height: 1.6;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            gap: 20px;
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            width: 100%;
-        }
-        .header h1 {
-            font-size: 2.5em;
-            color: #4ecdc4;
-            margin: 0;
-        }
-        .header p {
-            font-size: 1.2em;
-            margin: 10px 0 0;
-        }
-        .channel-list {
-            flex: 1;
-            min-width: 25%;
-            max-width: 25%;
-            overflow-y: auto;
-            max-height: 80vh;
-        }
-        .section {
-            margin: 20px 0;
-        }
-        .section h2 {
-            color: #4ecdc4;
-            border-bottom: 2px solid #4ecdc4;
-            padding-bottom: 10px;
-            font-size: 1.5em;
-        }
-        .subsection {
-            margin-left: 15px;
-        }
-        .subsection h3 {
-            color: #4ecdc4;
-            font-size: 1.2em;
-            margin: 10px 0;
-        }
-        .channel {
-            display: flex;
-            align-items: center;
-            margin: 8px 0;
-            padding: 12px 20px;
-            background: #4ecdc4;
-            color: #1a1a2e;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.3s, transform 0.3s;
-        }
-        .channel:hover {
-            background: #45b7aa;
-            transform: translateY(-2px);
-        }
-        .channel.active-channel {
-            color: red;
-        }
-        .favorite-btn {
-            margin-left: auto;
-            font-size: 1.2em;
-            cursor: pointer;
-            background: none;
-            border: none;
-            color: #1a1a2e;
-        }
-        .favorite-btn.favorite {
-            color: #ffd700;
-        }
-        .player-section {
-            flex: 3;
-            min-width: 75%;
-            max-width: 75%;
-            text-align: center;
-        }
-        .player-section video {
-            width: 100%;
-            max-width: 100%;
-            border-radius: 10px;
-            display: none;
-        }
-        .player-section video.active-player {
-            display: block;
-        }
-        .channel-name {
-            font-size: 2em;
-            color: #4ecdc4;
-            margin: 10px 0;
-        }
-        .warning {
-            color: #ff6666;
-            font-size: 0.9em;
-            margin-top: 10px;
-        }
-        @media (max-width: 600px) {
-            .container {
-                flex-direction: column;
-            }
-            .channel-list, .player-section {
-                max-width: 100%;
-                min-width: 100%;
-            }
-            .header h1 {
-                font-size: 1.8em;
-            }
-            .channel-name {
-                font-size: 1.5em;
-            }
-        }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>XOM TV - Iranska och Kurdiska Kanaler</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #1a1a2e;
+    color: white;
+    margin: 0;
+    padding: 20px;
+    line-height: 1.6;
+  }
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 20px;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    width: 100%;
+  }
+  .header h1 {
+    font-size: 2.5em;
+    color: #4ecdc4;
+    margin: 0;
+  }
+  .header p {
+    font-size: 1.2em;
+    margin: 10px 0 0;
+  }
+  .section {
+    margin: 20px 0;
+    width: 100%;
+  }
+  .section h2 {
+    color: #4ecdc4;
+    border-bottom: 2px solid #4ecdc4;
+    padding-bottom: 10px;
+    font-size: 1.5em;
+  }
+  .channel-list, #favorites-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+  .channel {
+    background: #4ecdc4;
+    color: #1a1a2e;
+    border-radius: 25px;
+    padding: 12px 20px;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .channel:hover {
+    background: #45b7aa;
+    transform: translateY(-2px);
+  }
+  .favorite-btn {
+    margin-left: auto;
+    font-size: 1.2em;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #1a1a2e;
+  }
+  .favorite-btn.favorite {
+    color: #ffd700;
+  }
+  .player-section {
+    margin-top: 20px;
+    text-align: center;
+  }
+  video {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 10px;
+    display: none;
+  }
+  video.active-player {
+    display: block;
+  }
+  .channel-name {
+    font-size: 2em;
+    color: #4ecdc4;
+    margin: 10px 0;
+  }
+</style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>📺 XOM TV</h1>
-            <p>Iranska och Kurdiska TV-kanaler • Klicka för att titta</p>
-            <p class="warning">Kurdiska kanaler från karwan.tv öppnas i ett nytt fönster. Övriga kurdiska kanaler, KOODAK+ och MAHABAD använder en separat videospelare för bättre kompatibilitet.</p>
-        </div>
-        <div class="channel-list">
-            <div class="section" id="favorites-section" style="display: none;">
-                <h2>🌟 Favoriter</h2>
-                <div id="favorites-list"></div>
-            </div>
-            <div class="section">
-                <h2>⭐ Iranska Kanaler</h2>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/tv1.m3u8?t=1757870529226" data-name="TV1" onclick="playChannel(this)"><span>TV1</span><button class="favorite-btn" onclick="toggleFavorite(this, 'TV1')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/tv2.m3u8?t=1757871250791" data-name="TV2" onclick="playChannel(this)"><span>TV2</span><button class="favorite-btn" onclick="toggleFavorite(this, 'TV2')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/tv3.m3u8?t=1757871251942" data-name="TV3" onclick="playChannel(this)"><span>TV3</span><button class="favorite-btn" onclick="toggleFavorite(this, 'TV3')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/tv4.m3u8?t=1757871254788" data-name="TV4" onclick="playChannel(this)"><span>TV4</span><button class="favorite-btn" onclick="toggleFavorite(this, 'TV4')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/tv5.m3u8?t=1757871279765" data-name="TV5" onclick="playChannel(this)"><span>TV5</span><button class="favorite-btn" onclick="toggleFavorite(this, 'TV5')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/nasim.m3u8?t=1757871258347" data-name="NASIM" onclick="playChannel(this)"><span>NASIM</span><button class="favorite-btn" onclick="toggleFavorite(this, 'NASIM')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/irinn.m3u8?t=1757871268758" data-name="KHABAR1" onclick="playChannel(this)"><span>KHABAR1</span><button class="favorite-btn" onclick="toggleFavorite(this, 'KHABAR1')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/irinn2.m3u8?t=1757871261314" data-name="KHABAR2" onclick="playChannel(this)"><span>KHABAR2</span><button class="favorite-btn" onclick="toggleFavorite(this, 'KHABAR2')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/varzesh.m3u8?t=1757871272209" data-name="VARZESH" onclick="playChannel(this)"><span>VARZESH</span><button class="favorite-btn" onclick="toggleFavorite(this, 'VARZESH')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/pouya.m3u8?t=1757871287034" data-name="POUYA" onclick="playChannel(this)"><span>POUYA</span><button class="favorite-btn" onclick="toggleFavorite(this, 'POUYA')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/omid.m3u8?t=1757871317760" data-name="OMID" onclick="playChannel(this)"><span>OMID</span><button class="favorite-btn" onclick="toggleFavorite(this, 'OMID')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/ifilm.m3u8?t=1757871643731" data-name="IFILM" onclick="playChannel(this)"><span>IFILM</span><button class="favorite-btn" onclick="toggleFavorite(this, 'IFILM')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/namayesh.m3u8?t=1757871719649" data-name="NAMAYESH" onclick="playChannel(this)"><span>NAMAYESH</span><button class="favorite-btn" onclick="toggleFavorite(this, 'NAMAYESH')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/tamasha.m3u8?t=1757871721596" data-name="TAMASHA" onclick="playChannel(this)"><span>TAMASHA</span><button class="favorite-btn" onclick="toggleFavorite(this, 'TAMASHA')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/mostanad.m3u8?t=1757871724100" data-name="MOSTANAD" onclick="playChannel(this)"><span>MOSTANAD</span><button class="favorite-btn" onclick="toggleFavorite(this, 'MOSTANAD')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/amozesh.m3u8?t=1757871727005" data-name="AMOZESH" onclick="playChannel(this)"><span>AMOZESH</span><button class="favorite-btn" onclick="toggleFavorite(this, 'AMOZESH')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/salamat.m3u8?t=1757871731152" data-name="SALAMAT" onclick="playChannel(this)"><span>SALAMAT</span><button class="favorite-btn" onclick="toggleFavorite(this, 'SALAMAT')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/ofogh.m3u8?t=1757871731152" data-name="OFOGH" onclick="playChannel(this)"><span>OFOGH</span><button class="favorite-btn" onclick="toggleFavorite(this, 'OFOGH')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/nvod1.m3u8?t=1757875752133" data-name="KOODAK" onclick="playChannel(this)"><span>KOODAK</span><button class="favorite-btn" onclick="toggleFavorite(this, 'KOODAK')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/nvod8.m3u8?t=1757875753737" data-name="IRAN JAVAN" onclick="playChannel(this)"><span>IRAN JAVAN</span><button class="favorite-btn" onclick="toggleFavorite(this, 'IRAN JAVAN')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/nvod4.m3u8?t=1758043626255" data-name="CAFEBAZI" onclick="playChannel(this)"><span>CAFEBAZI</span><button class="favorite-btn" onclick="toggleFavorite(this, 'CAFEBAZI')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/nvod10.m3u8?t=1757875758664" data-name="FILM" onclick="playChannel(this)"><span>FILM</span><button class="favorite-btn" onclick="toggleFavorite(this, 'FILM')">☆</button></div>
-                <div class="channel" data-stream="https://telewebion.com/live/mahabad" data-name="MAHABAD" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>MAHABAD</span><button class="favorite-btn" onclick="toggleFavorite(this, 'MAHABAD')">☆</button></div>
-                <div class="channel" data-stream="https://telewebion.com/live/javaneh" data-name="KOODAK+" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>KOODAK+</span><button class="favorite-btn" onclick="toggleFavorite(this, 'KOODAK+')">☆</button></div>
-            </div>
-            <div class="section">
-                <h2>🏙️ Regionala Kanaler</h2>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/alborz.m3u8?t=1757871975911" data-name="ALBORZ" onclick="playChannel(this)"><span>ALBORZ</span><button class="favorite-btn" onclick="toggleFavorite(this, 'ALBORZ')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/rasht.m3u8?t=1757871977771" data-name="RASHT" onclick="playChannel(this)"><span>RASHT</span><button class="favorite-btn" onclick="toggleFavorite(this, 'RASHT')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/mazandaran.m3u8?t=1757871980048" data-name="MAZANDARAN" onclick="playChannel(this)"><span>MAZANDARAN</span><button class="favorite-btn" onclick="toggleFavorite(this, 'MAZANDARAN')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/tabriz.m3u8?t=1757871982316" data-name="TABRIZ" onclick="playChannel(this)"><span>TABRIZ</span><button class="favorite-btn" onclick="toggleFavorite(this, 'TABRIZ')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/booshehr.m3u8?t=1757871985788" data-name="BOSHEHR" onclick="playChannel(this)"><span>BOSHEHR</span><button class="favorite-btn" onclick="toggleFavorite(this, 'BOSHEHR')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/ahvaz.m3u8?t=1757871988922" data-name="AHVAZ" onclick="playChannel(this)"><span>AHVAZ</span><button class="favorite-btn" onclick="toggleFavorite(this, 'AHVAZ')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/bandarabas.m3u8?t=1757872000212" data-name="BANDARABBAS" onclick="playChannel(this)"><span>BANDARABBAS</span><button class="favorite-btn" onclick="toggleFavorite(this, 'BANDARABBAS')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/esfehan.m3u8?t=1757872000859" data-name="ESFFAHAN" onclick="playChannel(this)"><span>ESFFAHAN</span><button class="favorite-btn" onclick="toggleFavorite(this, 'ESFFAHAN')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/kordestan.m3u8?t=1757872007497" data-name="KORDESTAN" onclick="playChannel(this)"><span>KORDESTAN</span><button class="favorite-btn" onclick="toggleFavorite(this, 'KORDESTAN')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/markazi.m3u8?t=1757872014857" data-name="MARKAZI" onclick="playChannel(this)"><span>MARKAZI</span><button class="favorite-btn" onclick="toggleFavorite(this, 'MARKAZI')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/khorasaneshomali.m3u8?t=1757872023492" data-name="KHORASAN SHOMALI" onclick="playChannel(this)"><span>KHORASAN SHOMALI</span><button class="favorite-btn" onclick="toggleFavorite(this, 'KHORASAN SHOMALI')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/khorasanejonoobi.m3u8?t=1757872029298" data-name="KHORASAN GONOBI" onclick="playChannel(this)"><span>KHORASAN GONOBI</span><button class="favorite-btn" onclick="toggleFavorite(this, 'KHORASAN GONOBI')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/yazd.m3u8?t=1757872042742" data-name="YAZD" onclick="playChannel(this)"><span>YAZD</span><button class="favorite-btn" onclick="toggleFavorite(this, 'YAZD')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/ardabil.m3u8?t=1757872047367" data-name="ARDABIL" onclick="playChannel(this)"><span>ARDABIL</span><button class="favorite-btn" onclick="toggleFavorite(this, 'ARDABIL')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/jahanbin.m3u8?t=1757872052388" data-name="SHAHREKORD" onclick="playChannel(this)"><span>SHAHREKORD</span><button class="favorite-btn" onclick="toggleFavorite(this, 'SHAHREKORD')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/yasooj.m3u8?t=1757872056013" data-name="YASOOJ" onclick="playChannel(this)"><span>YASOOJ</span><button class="favorite-btn" onclick="toggleFavorite(this, 'YASOOJ')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/zahedan.m3u8?t=1757873645577" data-name="ZAHEDAN" onclick="playChannel(this)"><span>ZAHEDAN</span><button class="favorite-btn" onclick="toggleFavorite(this, 'ZAHEDAN')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/qazvin.m3u8?t=1757873648511" data-name="QAZVIN" onclick="playChannel(this)"><span>QAZVIN</span><button class="favorite-btn" onclick="toggleFavorite(this, 'QAZVIN')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/semnan.m3u8?t=1757873651036" data-name="SEMNAN" onclick="playChannel(this)"><span>SEMNAN</span><button class="favorite-btn" onclick="toggleFavorite(this, 'SEMNAN')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/fars.m3u8?t=1757873654282" data-name="FARS" onclick="playChannel(this)"><span>FARS</span><button class="favorite-btn" onclick="toggleFavorite(this, 'FARS')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/qom.m3u8?t=1757873657938" data-name="QOM" onclick="playChannel(this)"><span>QOM</span><button class="favorite-btn" onclick="toggleFavorite(this, 'QOM')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/azarbijan-gharbi.m3u8?t=1758056922997" data-name="UROMIYEH" onclick="playChannel(this)"><span>UROMIYEH</span><button class="favorite-btn" onclick="toggleFavorite(this, 'UROMIYEH')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/golestan.m3u8?t=1757873668114" data-name="GORGAN" onclick="playChannel(this)"><span>GORGAN</span><button class="favorite-btn" onclick="toggleFavorite(this, 'GORGAN')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/eshragh.m3u8?t=1757873879629" data-name="ESHRAGH" onclick="playChannel(this)"><span>ESHRAGH</span><button class="favorite-btn" onclick="toggleFavorite(this, 'ESHRAGH')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/khorasanerazavi.m3u8?t=1757873882640" data-name="KHORASAN RAZAVI" onclick="playChannel(this)"><span>KHORASAN RAZAVI</span><button class="favorite-btn" onclick="toggleFavorite(this, 'KHORASAN RAZAVI')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/kermanshah.m3u8?t=1757873886210" data-name="KERMANSHAH" onclick="playChannel(this)"><span>KERMANSHAH</span><button class="favorite-btn" onclick="toggleFavorite(this, 'KERMANSHAH')">☆</button></div>
-                <div class="channel" data-stream="https://corsproxy.io/?https://www.fam.ir/api/bp-player/get-link/igap/kerman.m3u8?t=1757873889837" data-name="KERMAN" onclick="playChannel(this)"><span>KERMAN</span><button class="favorite-btn" onclick="toggleFavorite(this, 'KERMAN')">☆</button></div>
-            </div>
-            <div class="section">
-                <h2>🎥 Kurdiska Kanaler</h2>
-                <div class="subsection">
-                    <h3>Nyheter</h3>
-                    <div class="channel" data-stream="https://5a3ed7a72ed4b.streamlock.net/zagrostv/SMIL:myStream.smil/playlist.m3u8" data-name="Zagros" data-kurdish="true" onclick="playChannel(this)"><span>Zagros</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Zagros')">☆</button></div>
-                    <div class="channel" data-stream="https://live.channel8.com/Channel8-Kurdish/index.fmp4.m3u8" data-name="Kanal8" data-kurdish="true" onclick="playChannel(this)"><span>Kanal8</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Kanal8')">☆</button></div>
-                    <div class="channel" data-stream="https://svs.itworkscdn.net/rudawlive/rudawlive.smil/playlist.m3u8" data-name="Rudaw" data-kurdish="true" onclick="playChannel(this)"><span>Rudaw</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Rudaw')">☆</button></div>
-                    <div class="channel" data-stream="https://hlspackager.akamaized.net/live/DB/KURDSAT_NEWS/HLS/KURDSAT_NEWS-avc1_1500000=10001.m3u8" data-name="Kurdsat News" data-kurdish="true" onclick="playChannel(this)"><span>Kurdsat News</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Kurdsat News')">☆</button></div>
-                    <div class="channel" data-stream="https://5dab1db4b25fe.streamlock.net/sterk/sterktv/chunklist_w1084077249.m3u8" data-name="Sterk" data-kurdish="true" onclick="playChannel(this)"><span>Sterk</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Sterk')">☆</button></div>
-                    <div class="channel" data-stream="https://media.streambrothers.com:1936/8226/8226/playlist.m3u8" data-name="NRT News" data-kurdish="true" onclick="playChannel(this)"><span>NRT News</span><button class="favorite-btn" onclick="toggleFavorite(this, 'NRT News')">☆</button></div>
-                    <div class="channel" data-stream="https://www.kurdistan24.net/ckb/live" data-name="Karwan Kurdistan24" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Kurdistan24</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Kurdistan24')">☆</button></div>
-                    <div class="channel" data-stream="https://news.kurdsat.tv/en/watch-live?zx=1760474096211&no_sw_cr=1" data-name="Karwan Kurdsat News TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Kurdsat News TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Kurdsat News TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/mmn-news.html" data-name="Karwan Mmn News" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Mmn News</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Mmn News')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/shams-tv.html" data-name="Karwan Shams TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Shams TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Shams TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/rudaw-tv.html" data-name="Karwan Rudaw TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Rudaw TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Rudaw TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/channel-8.html" data-name="Karwan Channel 8" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Channel 8</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Channel 8')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/cpi-tv.html" data-name="Karwan CPI TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan CPI TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan CPI TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/duhok-tv.html" data-name="Karwan Duhok TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Duhok TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Duhok TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/geli-kurdistan-tv.html" data-name="Karwan Geli Kurdistan TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Geli Kurdistan TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Geli Kurdistan TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/kurdistan24-tv.html" data-name="Karwan Kurdistan24 TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Kurdistan24 TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Kurdistan24 TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/nalia-tv.html" data-name="Karwan Nalia TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Nalia TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Nalia TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/rojhelat-tv.html" data-name="Karwan Rojhelat TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Rojhelat TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Rojhelat TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/slemani-tv.html" data-name="Karwan Slemani TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Slemani TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Slemani TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/xabir-tv.html" data-name="Karwan Xabir TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Xabir TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Xabir TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/kurdistan-tv.html" data-name="Karwan Kurdistan TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Kurdistan TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Kurdistan TV')">☆</button></div>
-                </div>
-                <div class="subsection">
-                    <h3>Musik</h3>
-                    <div class="channel" data-stream="https://4kuhls.persiana.live/hls/stream.m3u8" data-name="4 Kurd" data-kurdish="true" onclick="playChannel(this)"><span>4 Kurd</span><button class="favorite-btn" onclick="toggleFavorite(this, '4 Kurd')">☆</button></div>
-                    <div class="channel" data-stream="http://54.36.110.140/live3/live3.m3u8" data-name="Med Music" data-kurdish="true" onclick="playChannel(this)"><span>Med Music</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Med Music')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/med-muzik-tv.html" data-name="Karwan Med Muzik TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Med Muzik TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Med Muzik TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/mmn-clip.html" data-name="Karwan Mmn Clip" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Mmn Clip</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Mmn Clip')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/graryan-tv.html" data-name="Karwan Graryan TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Graryan TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Graryan TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/kurd-7.html" data-name="Karwan Kurd 7" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Kurd 7</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Kurd 7')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/4-kurd-tv.html" data-name="Karwan 4 Kurd TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan 4 Kurd TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan 4 Kurd TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/bnar-tv.html" data-name="Karwan Bnar TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Bnar TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Bnar TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/kurdmax-music.html" data-name="Karwan Kurdmax Music" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Kurdmax Music</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Kurdmax Music')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/walla-tv.html" data-name="Karwan Walla TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Walla TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Walla TV')">☆</button></div>
-                </div>
-                <div class="subsection">
-                    <h3>Underhållning</h3>
-                    <div class="channel" data-stream="https://stream.aryen.tv/live/tv/chunklist_w189856026.m3u8" data-name="Aryen" data-kurdish="true" onclick="playChannel(this)"><span>Aryen</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Aryen')">☆</button></div>
-                    <div class="channel" data-stream="https://cira-tv.akamaized.net/hls/stream_0.m3u8" data-name="Cira" data-kurdish="true" onclick="playChannel(this)"><span>Cira</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Cira')">☆</button></div>
-                    <div class="channel" data-stream="https://live.kwikmotion.com/waarmedialive/waarmedia.smil/waarmediapublish/waarmedia_source/chunks.m3u8" data-name="Waar" data-kurdish="true" onclick="playChannel(this)"><span>Waar</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Waar')">☆</button></div>
-                    <div class="channel" data-stream="https://rojava-tv.akamaized.net/hls/rojava-tv.m3u8" data-name="Rojava" data-kurdish="true" onclick="playChannel(this)"><span>Rojava</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Rojava')">☆</button></div>
-                    <div class="channel" data-stream="https://hlspackager.akamaized.net/live/DB/KURDSAT_HD/HLS/KURDSAT_HD-avc1_1500000=10001.m3u8" data-name="Kurdsat HD" data-kurdish="true" onclick="playChannel(this)"><span>Kurdsat HD</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Kurdsat HD')">☆</button></div>
-                    <div class="channel" data-stream="https://5a3ed7a72ed4b.streamlock.net/live/SMIL:myStream.smil/playlist.m3u8" data-name="Kurdistan TV" data-kurdish="true" onclick="playChannel(this)"><span>Kurdistan TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Kurdistan TV')">☆</button></div>
-                    <div class="channel" data-stream="https://cdn.northtelecom.org/KurdChannel.m3u8" data-name="PDKI" data-kurdish="true" onclick="playChannel(this)"><span>PDKI</span><button class="favorite-btn" onclick="toggleFavorite(this, 'PDKI')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/kurd-channel.html" data-name="Karwan Kurd Channel" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Kurd Channel</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Kurd Channel')">☆</button></div>
-                    <div class="channel" data-stream="https://live.tvkomala.com/live/komala/playlist.m3u8" data-name="Komala" data-kurdish="true" onclick="playChannel(this)"><span>Komala</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Komala')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/cpi-tv.html" data-name="Karwan CPI TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan CPI TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan CPI TV')">☆</button></div>
-                    <div class="channel" data-stream="https://live.host247.net/gk/gksat/playlist.m3u8" data-name="GK" data-kurdish="true" onclick="playChannel(this)"><span>GK</span><button class="favorite-btn" onclick="toggleFavorite(this, 'GK')">☆</button></div>
-                    <div class="channel" data-stream="https://lenz.splus.ir/PLTV/88888888/224/3221226647/index.m3u8" data-name="IRIB Kurdistan" data-kurdish="true" onclick="playChannel(this)"><span>IRIB Kurdistan</span><button class="favorite-btn" onclick="toggleFavorite(this, 'IRIB Kurdistan')">☆</button></div>
-                    <div class="channel" data-stream="https://kurdish.sahartv.ir/live" data-name="Sahar" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Sahar</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Sahar')">☆</button></div>
-                    <div class="channel" data-stream="https://www.ava.news/livewatch?zx=1760476463185&no_sw_cr=1" data-name="Ava TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Ava TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Ava TV')">☆</button></div>
-                    <div class="channel" data-stream="https://utvhawler.net/index.htm" data-name="UTV Hawler" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>UTV Hawler</span><button class="favorite-btn" onclick="toggleFavorite(this, 'UTV Hawler')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/waar-tv.html" data-name="Karwan Waar TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Waar TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Waar TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/rojava-tv.html" data-name="Karwan Rojava TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Rojava TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Rojava TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/ronahi-tv.html" data-name="Karwan Ronahi TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Ronahi TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Ronahi TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/ava-tv.html" data-name="Karwan Ava TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Ava TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Ava TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/utv-hawler.html" data-name="Karwan UTV Hawler" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan UTV Hawler</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan UTV Hawler')">☆</button></div>
-                </div>
-                <div class="subsection">
-                    <h3>Barn</h3>
-                    <div class="channel" data-stream="https://5dcabf026b188.streamlock.net/afarinTV/livestream/playlist.m3u8" data-name="Baxche" data-kurdish="true" onclick="playChannel(this)"><span>Baxche</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Baxche')">☆</button></div>
-                    <div class="channel" data-stream="https://65f16f0fdfc51.streamlock.net/afarinTV/livestream/playlist.m3u8" data-name="Afarin Kids" data-kurdish="true" onclick="playChannel(this)"><span>Afarin Kids</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Afarin Kids')">☆</button></div>
-                    <div class="channel" data-stream="https://zindikurmanci.zaroktv.com.tr/hls/0/stream.m3u8" data-name="Zarok Kurmanci" data-kurdish="true" onclick="playChannel(this)"><span>Zarok Kurmanci</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Zarok Kurmanci')">☆</button></div>
-                    <div class="channel" data-stream="https://zindisorani.zaroktv.com.tr/hls/stream.m3u8" data-name="Zarok Sorani" data-kurdish="true" onclick="playChannel(this)"><span>Zarok Sorani</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Zarok Sorani')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/kidco-tv.html" data-name="Karwan Kidco TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Kidco TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Kidco TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/mmn-kids.html" data-name="Karwan Mmn Kids" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Mmn Kids</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Mmn Kids')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/nrt-3-kids.html" data-name="Karwan Nrt 3 Kids" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Nrt 3 Kids</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Nrt 3 Kids')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/afarin-baxcha.html" data-name="Karwan Afarin Baxcha" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Afarin Baxcha</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Afarin Baxcha')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/astera-baby.html" data-name="Karwan Astera Baby" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Astera Baby</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Astera Baby')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/jojo-mama.html" data-name="Karwan Jojo Mama" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Jojo Mama</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Jojo Mama')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/gewher-kids.html" data-name="Karwan Gewher Kids" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Gewher Kids</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Gewher Kids')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/zarok-tv.html" data-name="Karwan Zarok TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Zarok TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Zarok TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/kurdmax-pepule.html" data-name="Karwan Kurdmax Pepule" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Kurdmax Pepule</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Kurdmax Pepule')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/barin-family.html" data-name="Karwan Barin Family" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Barin Family</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Barin Family')">☆</button></div>
-                </div>
-                <div class="subsection">
-                    <h3>Film</h3>
-                    <div class="channel" data-stream="https://karwan.tv/astera-movies.html" data-name="Karwan Astera Movies" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Astera Movies</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Astera Movies')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/barin-movies.html" data-name="Karwan Barin Movies" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Barin Movies</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Barin Movies')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/bnar-action.html" data-name="Karwan Bnar Action" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Bnar Action</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Bnar Action')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/cihan-tv.html" data-name="Karwan Cihan TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Cihan TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Cihan TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/delal-tv.html" data-name="Karwan Delal TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Delal TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Delal TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/mix-tv.html" data-name="Karwan Mix TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Mix TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Mix TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/mmn-drama.html" data-name="Karwan Mmn Drama" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Mmn Drama</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Mmn Drama')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/mmn-movies.html" data-name="Karwan Mmn Movies" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Mmn Movies</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Mmn Movies')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/mmn-show.html" data-name="Karwan Mmn Show" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Mmn Show</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Mmn Show')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/nalia-tv-2.html" data-name="Karwan Nalia TV 2" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Nalia TV 2</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Nalia TV 2')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/qallam-tv.html" data-name="Karwan Qallam TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Qallam TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Qallam TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/newline-tv-2.html" data-name="Karwan Newline TV 2" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Newline TV 2</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Newline TV 2')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/soz-tv.html" data-name="Karwan Soz TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Soz TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Soz TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/zed-tv-plus.html" data-name="Karwan Zed TV Plus" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Zed TV Plus</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Zed TV Plus')">☆</button></div>
-                </div>
-                <div class="subsection">
-                    <h3>Quran</h3>
-                    <div class="channel" data-stream="https://karwan.tv/nrt-4.html" data-name="Karwan NRT 4" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan NRT 4</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan NRT 4')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/bask-tv.html" data-name="Karwan Bask TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Bask TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Bask TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/amozhgary-tv.html" data-name="Karwan Amozhgary TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Amozhgary TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Amozhgary TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/ashna-quran.html" data-name="Karwan Ashna Quran" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Ashna Quran</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Ashna Quran')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/ashti-family.html" data-name="Karwan Ashti Family" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Ashti Family</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Ashti Family')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/ashti-tv.html" data-name="Karwan Ashti TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Ashti TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Ashti TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/baboly-tv.html" data-name="Karwan Baboly TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Baboly TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Baboly TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/bangawaz-tv.html" data-name="Karwan Bangawaz" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Bangawaz</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Bangawaz')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/bangxwazen-badinan-tv.html" data-name="Karwan Bangxwazen Badinan TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Bangxwazen Badinan TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Bangxwazen Badinan TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/barin-quran.html" data-name="Karwan Barin Quran" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Barin Quran</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Barin Quran')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/eman-tv.html" data-name="Karwan Eman TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Eman TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Eman TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/farmoda-tv.html" data-name="Karwan Farmoda TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Farmoda TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Farmoda TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/imk-quran.html" data-name="Karwan IMK Quran" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan IMK Quran</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan IMK Quran')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/kani-tv.html" data-name="Karwan Kani TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Kani TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Kani TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/mihrab-tv.html" data-name="Karwan Mihrab TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Mihrab TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Mihrab TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/mmn-quran-tv.html" data-name="Karwan Mmn Quran TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Mmn Quran TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Mmn Quran TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/naqshi-media.html" data-name="Karwan Naqshi Media" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Naqshi Media</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Naqshi Media')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/payam-tv.html" data-name="Karwan Payam TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Payam TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Payam TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/sada-tv.html" data-name="Karwan Sada TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Sada TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Sada TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/shar-quran.html" data-name="Karwan Shar Quran" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Shar Quran</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Shar Quran')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/shna-quran.html" data-name="Karwan Shna Quran" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Shna Quran</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Shna Quran')">☆</button></div>
-                </div>
-                <div class="subsection">
-                    <h3>Kultur</h3>
-                    <div class="channel" data-stream="https://karwan.tv/ala-tv.html" data-name="Karwan ALA" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan ALA</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan ALA')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/astera-culture.html" data-name="Karwan Astera Culture" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Astera Culture</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Astera Culture')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/cira-tv.html" data-name="Karwan Cira TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Cira TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Cira TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/dever-tv.html" data-name="Karwan Dever TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Dever TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Dever TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/dimen-tv.html" data-name="Karwan Dimen TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Dimen TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Dimen TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/euro-kurd-tv.html" data-name="Karwan Euro Kurd TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Euro Kurd TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Euro Kurd TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/jamawar-tv.html" data-name="Karwan Jamawar TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Jamawar TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Jamawar TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/kurdana-tv.html" data-name="Karwan Kurdana TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Kurdana TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Kurdana TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/rasan-tv.html" data-name="Karwan Rasan TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Rasan TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Rasan TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/rozh-tv.html" data-name="Karwan Rozh TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Rozh TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Rozh TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/shar-tv.html" data-name="Karwan Shar TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Shar TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Shar TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/shna-tv.html" data-name="Karwan Shna TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Shna TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Shna TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/sima-tv.html" data-name="Karwan Sima TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Sima TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Sima TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/srusht-tv.html" data-name="Karwan Srusht TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Srusht TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Srusht TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/utv-duhok.html" data-name="Karwan UTV Duhok" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan UTV Duhok</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan UTV Duhok')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/zaxo-tv.html" data-name="Karwan Zaxo TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Zaxo TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Zaxo TV')">☆</button></div>
-                </div>
-                <div class="subsection">
-                    <h3>Serial</h3>
-                    <div class="channel" data-stream="https://karwan.tv/astera-family.html" data-name="Karwan Astera Family" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Astera Family</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Astera Family')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/astera-show.html" data-name="Karwan Astera Show" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Astera Show</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Astera Show')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/bmc-tv.html" data-name="Karwan BMC TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan BMC TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan BMC TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/derwaze-tv.html" data-name="Karwan Derwaze TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Derwaze TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Derwaze TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/kurdmax-show-tv.html" data-name="Karwan Kurdmax Show TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Kurdmax Show TV</span><button class="favorite-btn" onclick="toggleFavorite(this, 'Karwan Kurdmax Show TV')">☆</button></div>
-                    <div class="channel" data-stream="https://karwan.tv/kurdmax-tv.html" data-name="Karwan Kurdmax TV" data-kurdish="true" data-redirect="true" onclick="playChannel(this)"><span>Karwan Kurdmax TV</span><button class="favorite-btn" onclick="toggle
+<div class="header">
+  <h1>XOM TV</h1>
+  <p>Iranska och Kurdiska TV-kanaler</p>
+</div>
+
+<div class="section" id="favorites-section" style="display:none;">
+  <h2>Favoriter (max 10)</h2>
+  <div id="favorites-list"></div>
+</div>
+
+<div class="section">
+  <h2>Alla Kanaler</h2>
+  <div class="channel-list" id="channels-list">
+    <!-- Exempelkanaler -->
+    <div class="channel" data-stream="https://example.com/stream1.m3u8" data-name="TV1" onclick="playChannel(this)">
+      <span>TV1</span>
+      <button class="favorite-btn" onclick="toggleFavorite(event, this, 'TV1')">&#9734;</button>
+    </div>
+    <div class="channel" data-stream="https://example.com/stream2.m3u8" data-name="TV2" onclick="playChannel(this)">
+      <span>TV2</span>
+      <button class="favorite-btn" onclick="toggleFavorite(event, this, 'TV2')">&#9734;</button>
+    </div>
+    <!-- Fler kanaler här -->
+  </div>
+</div>
+
+<div class="player-section">
+  <div class="channel-name" id="current-channel-name">Välj en kanal</div>
+  <video controls id="player" muted></video>
+</div>
+
+<script>
+  function playChannel(element) {
+    const streamUrl = element.dataset.stream;
+    const video = document.getElementById('player');
+    const channelName = element.dataset.name;
+
+    video.src = streamUrl;
+    video.classList.add('active-player');
+    video.muted = false; // Ljud på
+    video.play();
+
+    document.getElementById('current-channel-name').textContent = channelName;
+  }
+
+  function toggleFavorite(event, button, channelName) {
+    event.stopPropagation(); // Förhindrar att playChannel triggas
+    const channelDiv = button.closest('.channel');
+    const favoritesList = document.getElementById('favorites-list');
+    const favoritesSection = document.getElementById('favorites-section');
+    const currentFavorites = favoritesList.querySelectorAll('.channel').length;
+
+    if (!button.classList.contains('favorite') && currentFavorites >= 10) {
+      alert('Du kan bara ha upp till 10 favoriter.');
+      return;
+    }
+
+    button.classList.toggle('favorite');
+
+    if (button.classList.contains('favorite')) {
+      // Kopiera kanal till favoriter
+      const favoriteChannel = channelDiv.cloneNode(true);
+      favoriteChannel.querySelector('.favorite-btn').onclick = function(e) { toggleFavorite(e, this, channelName); };
+      favoriteChannel.onclick = function() { playChannel(favoriteChannel); };
+      favoritesList.appendChild(favoriteChannel);
+      favoritesSection.style.display = 'block';
+    } else {
+      // Ta bort från favoriter
+      const favChannels = favoritesList.querySelectorAll('.channel');
+      favChannels.forEach(ch => {
+        if (ch.dataset.name === channelName) {
+          favoritesList.removeChild(ch);
+        }
+      });
+      if (favoritesList.children.length === 0) {
+        favoritesSection.style.display = 'none';
+      }
+    }
+  }
+</script>
+</body>
+</html>
